@@ -19,9 +19,9 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-	private void test() throws SQLException {
-		System.out.println(film);
-	}
+//	private void test() throws SQLException {
+//		System.out.println(film);
+//	}
 
 	private void launch() throws SQLException {
 		Scanner input = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class FilmQueryApp {
 			System.out.println("1. Find Film by film id. ");
 			System.out.println("2. Find Actor by Actor id. ");
 			System.out.println("3. Find Actors by film id. ");
-			System.out.println("4. quit.");
+			System.out.println("4. Find film by keyword.");
 			int choice = input.nextInt();
 
 			switch (choice) {
@@ -57,6 +57,7 @@ public class FilmQueryApp {
 				System.out.println(actor);
 				break;
 			case 3:
+
 				System.out
 						.println("Please enter the id of the film that the Actor was in that you would like to see: ");
 				int filmActorId = input.nextInt();
@@ -66,7 +67,18 @@ public class FilmQueryApp {
 					System.out.println(actor2);
 				}
 				break;
+			case 4:
+
+				System.out.println("Please enter the keyword to search on: ");
+				String keyword = input.next();
+				List<Film> films = db.findFilmByKeyword(keyword);
+				for (Film film2 : films) {
+
+					System.out.println(film2);
+				}
+
 			}
+			break;
 
 		} while (programPower);
 
