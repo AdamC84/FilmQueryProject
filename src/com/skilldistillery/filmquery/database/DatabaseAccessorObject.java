@@ -18,8 +18,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public Film findFilmById(int filmId) throws SQLException {
 		String user = "student";
 		String pwd = "student";
-		String sql = "SELECT * FROM film WHERE id = ?";
-		int count = 0;
+		String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features,l.name FROM film f JOIN language l ON f.language_id = l.id WHERE f.id = ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pwd);
 				PreparedStatement pst = conn.prepareStatement(sql);) {
@@ -30,8 +29,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				return new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
 						rs.getString("release_year"), rs.getInt("language_id"), rs.getInt("rental_duration"),
 						rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"),
-						rs.getString("rating"), rs.getString("special_features"));
-
+						rs.getString("rating"), rs.getString("special_features"), rs.getString("name"),
+						(findActorsByFilmId(rs.getInt("id"))));
 			}
 		}
 
@@ -85,7 +84,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		List<Film> films = new ArrayList<>();
 		String user = "student";
 		String pwd = "student";
-		String sql = "SELECT * FROM film WHERE film.title like ? OR film.description like ?";
+		String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features,l.name FROM film f JOIN language l ON f.language_id = l.id WHERE f.title like ? OR f.description like ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pwd);
 				PreparedStatement pst = conn.prepareStatement(sql);) {
@@ -96,7 +95,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				Film film = new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"),
 						rs.getString("release_year"), rs.getInt("language_id"), rs.getInt("rental_duration"),
 						rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"),
-						rs.getString("rating"), rs.getString("special_features"));
+						rs.getString("rating"), rs.getString("special_features"), rs.getString("name"),
+						(findActorsByFilmId(rs.getInt("id"))));
 				films.add(film);
 			}
 			if (films.equals(null)) {

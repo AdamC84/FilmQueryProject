@@ -1,5 +1,7 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 public class Film {
 	private int id;
 	private String title;
@@ -12,13 +14,15 @@ public class Film {
 	private double replacemnt_cost;
 	private String rating;
 	private String special_features;
+	private String language;
+	private List<Actor> actorList;
 	
 	public Film() {
 		super();
 	}
 
 	public Film(int id, String title, String description, String release_year, int language_id, int rental_duration,
-			double rental_rate, int length, double replacemnt_cost, String rating, String special_features) {
+			double rental_rate, int length, double replacemnt_cost, String rating, String special_features, String language, List<Actor> actorList) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -31,10 +35,20 @@ public class Film {
 		this.replacemnt_cost = replacemnt_cost;
 		this.rating = rating;
 		this.special_features = special_features;
+		this.language = language;
+		this.actorList = actorList;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public List<Actor> getActorList() {
+		return actorList;
+	}
+
+	public void setActorList(List<Actor> actorList) {
+		this.actorList = actorList;
 	}
 
 	public void setId(int id) {
@@ -120,13 +134,20 @@ public class Film {
 	public void setSpecial_features(String special_features) {
 		this.special_features = special_features;
 	}
+	public String getLanguage() {
+		return language;
+	}
+	
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 	@Override
 	public String toString() {
 		return "Film id: " + id + ", title: " + title + ", description: " + description + ", release_year: " + release_year
 				+ ", language_id: " + language_id + ", rental_duration: " + rental_duration + ", rental_rate: "
 				+ rental_rate + ", length: " + length + ", replacemnt_cost: " + replacemnt_cost + ", rating: " + rating
-				+ ", special_features: " + special_features +".";
+				+ ", special_features: " + special_features + "Language: " + language + "List of actors: " + actorList ;
 	}
 
 	@Override
