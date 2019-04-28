@@ -42,7 +42,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		String user = "student";
 		String pwd = "student";
 		String sql = "SELECT id, first_name, last_name FROM Actor WHERE id = ?";
-		int count = 0;
 
 		try (Connection conn = DriverManager.getConnection(URL, user, pwd);
 				PreparedStatement pst = conn.prepareStatement(sql);) {
@@ -98,13 +97,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 						rs.getString("rating"), rs.getString("special_features"), rs.getString("name"),
 						(findActorsByFilmId(rs.getInt("id"))));
 				films.add(film);
-			}
-			if (films.equals(null)) {
-				return null;
-			} else {
-				return films;
-			}
-		}
-	}
 
+			}
+			return films;
+		}
+
+	}
 }

@@ -1,6 +1,7 @@
 package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,8 +34,7 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner input) throws SQLException {
 		boolean programPower = true;
-
-		do {
+		dLabel: do {
 			System.out.println("Welcome to A.I.M.D.B (Adam's Internet Movie Database)");
 			System.out.println("Please enter what option you would like to do from the menu screen");
 			System.out.println("1. Find Film by film id. ");
@@ -47,8 +47,8 @@ public class FilmQueryApp {
 				choice = input.nextInt();
 			} catch (Exception e1) {
 				System.out.println("Invalid entry, please try again.");
+				break dLabel;
 			}
-
 			switch (choice) {
 			case 1:
 				System.out.println("Please enter the id of the film that you would like to see: ");
@@ -57,10 +57,14 @@ public class FilmQueryApp {
 					filmId = input.nextInt();
 				} catch (Exception e) {
 					System.out.println("Invalid entry. Please try again.");
-					;
+					break dLabel;
 				}
 				Film film = db.findFilmById(filmId);
-				System.out.println(film);
+				if (film == null) {
+					System.out.println("Your query returned no results.");
+				} else {
+					System.out.println(film);
+				}
 				continue;
 			case 2:
 				System.out.println("Please enter the id of the Actor that you would like to see: ");
@@ -69,12 +73,16 @@ public class FilmQueryApp {
 					actorId = input.nextInt();
 				} catch (Exception e) {
 					System.out.println("Invalid input. Please try again.");
+					break dLabel;
 				}
 				Actor actor = db.findActorById(actorId);
-				System.out.println(actor);
+				if (actor == null) {
+					System.out.println("Your query returned no results.");
+				} else {
+					System.out.println(actor);
+				}
 				continue;
 			case 3:
-
 				System.out
 						.println("Please enter the id of the film that the Actor was in that you would like to see: ");
 				int filmActorId = 0;
@@ -82,12 +90,13 @@ public class FilmQueryApp {
 					filmActorId = input.nextInt();
 				} catch (Exception e) {
 					System.out.println("Invalid entry. Please try again.");
+					break dLabel;
 				}
 				List<Actor> actorList = db.findActorsByFilmId(filmActorId);
-				for (Actor actor2 : actorList) {
-					if (actor2.equals(null)) {
-						System.out.println("Sorry, your query had no resluts.");
-					} else {
+				if (actorList.size() == 0) {
+					System.out.println("Your query returned no results.");
+				} else {
+					for (Actor actor2 : actorList) {
 						System.out.println(actor2);
 					}
 				}
@@ -100,13 +109,13 @@ public class FilmQueryApp {
 				} catch (Exception e) {
 					System.out.println("Invalid entry. Please try again.");
 				}
-				List<Film> films = db.findFilmByKeyword(keyword);
-				for (Film film2 : films) {
-					if (film2.equals(null)) {
-						System.out.println("Sorry, your query had no results.");
-					} else {
+				List<Film> films = new ArrayList<>();
+				films = db.findFilmByKeyword(keyword);
+				if (films.size() == 0) {
+					System.out.println("Your query returned no results.");
+				} else {
+					for (Film film2 : films)
 						System.out.println(film2);
-					}
 				}
 				continue;
 			case 5:
@@ -117,7 +126,6 @@ public class FilmQueryApp {
 				System.out.println("Not a valid entry.");
 			}
 			}
-
 		} while (programPower);
 
 	}
