@@ -5,18 +5,18 @@
 The Film Query project uses a mySQL database with fourteen different tables utilizing Java Database Connectivity API. It uses Java code that utilizes Object-Relational Mapping  and nested retrieval to pull data to the user using SQL statements. The user can query for films by film id's and will get a full description of the film's fields. It queries on Actor's id's as well,  retrieving the Actor's id, first name, and last name. The program can also retrieve a films description by a keyword search the will search on the "Title" and the "description" of the film.
 
 ### Technologies used
-  Java
-	Eclipse
-	GitHub
-	Google
-	Slack
-  mySQL
-  SQL
-  Java Database Connectivity API
-  Object-Relational Mapping
-  SQL predicates & functions
-  Relational Database Management System
-  Object Oriented Programming
+* Java
+* Eclipse
+*	GitHub
+*	Google
+*	Slack
+* mySQL
+* SQL
+* Java Database Connectivity API
+* Object-Relational Mapping
+* SQL predicates & functions
+* Relational Database Management System
+* Object Oriented Programming
 
 
 
